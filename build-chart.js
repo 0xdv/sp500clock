@@ -120,7 +120,7 @@ function buildChart(historicalCycles, currentPct, medianData) {
     options: {
       animation: false,
       responsive: true,
-      maintainAspectRatio: true,
+      maintainAspectRatio: false,
       layout: { padding: { top: 18 } },
       plugins: {
         legend: { display: false },
