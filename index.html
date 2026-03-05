@@ -4,20 +4,38 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>S&amp;P 500 — Election Cycles</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>S&amp;P 500 Clock — All 4-Year Election Cycles Overlaid (1928–2020)</h1>
-  <p class="subtitle">Older cycles are more transparent → newer are brighter &nbsp;·&nbsp; <span style="color:#FFD700">gold line</span> = current cycle 2025–present</p>
-  <div class="chart-wrap">
-    <canvas id="chart" height="620"></canvas>
-  </div>
-  <div class="legend">
-    <div class="legend-item"><div class="legend-dot historical"></div>Historical cycles (1928–2020)</div>
-    <div class="legend-item toggleable" id="legend-median"><div class="legend-dot median"></div>Median (all cycles)</div>
-    <div class="legend-item toggleable" id="legend-current"><div class="legend-dot current"></div>2025–now (live)</div>
-  </div>
-  <div id="status">Loading data…</div>
+  <header class="hero">
+    <h1>S&amp;P 500 Clock</h1>
+    <p class="subtitle">All 4-year election cycles overlaid&ensp;·&ensp;1928 – 2020</p>
+  </header>
+
+  <main class="card">
+    <div class="card-hint">
+      Older cycles are more transparent → newer are brighter&ensp;·&ensp;<span class="gold">gold line</span> = current cycle 2025–present
+    </div>
+
+    <div class="chart-wrap">
+      <canvas id="chart" height="620"></canvas>
+    </div>
+
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot historical"></div>Historical cycles (1928–2020)</div>
+      <div class="legend-item toggleable" id="legend-median"><div class="legend-dot median"></div>Median (all cycles)</div>
+      <div class="legend-item toggleable" id="legend-current"><div class="legend-dot current"></div>2025–now (live)</div>
+    </div>
+
+    <div id="status">Loading data…</div>
+  </main>
+
+  <footer class="footer">
+    Data via Yahoo Finance&ensp;·&ensp;Updated daily
+  </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
   <script src="hover.js"></script>
