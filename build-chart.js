@@ -56,7 +56,9 @@ Chart.register({
 });
 
 /* ── build chart ── */
-function buildChart(historicalCycles, currentPct) {
+let medianDsIndex = -1;
+
+function buildChart(historicalCycles, currentPct, medianData) {
   const ctx = document.getElementById('chart').getContext('2d');
   const n = historicalCycles.length;
 
@@ -78,6 +80,23 @@ function buildChart(historicalCycles, currentPct) {
       showLine: true,
     };
   });
+
+  if (medianData) {
+    medianDsIndex = datasets.length;
+    origAlpha.push(0.9); curAlpha.push(0.9); tgtAlpha.push(0.9);
+    origWidth.push(2.5); curWidth.push(2.5); tgtWidth.push(2.5);
+    datasets.push({
+      label: 'Median',
+      data: medianData.x.map((x, i) => ({ x, y: medianData.pct[i] })),
+      borderColor: 'rgba(255,255,255,0.9)',
+      borderWidth: 2.5,
+      borderDash: [6, 3],
+      pointRadius: 0,
+      tension: 0.2,
+      showLine: true,
+      order: -2,
+    });
+  }
 
   if (currentPct && currentPct.length) {
     const xs = Array.from({ length: currentPct.length }, (_, i) => i / TRADING_DAYS_4Y);
@@ -112,7 +131,9 @@ function buildChart(historicalCycles, currentPct) {
             title: items => {
               const d = items[0].dataset;
               const x = items[0].parsed.x;
+              if (d.label === 'Median') return 'Median (all cycles)';
               const startYear = parseInt(d.label);
+              if (isNaN(startYear)) return d.label;
               const curYear = Math.floor(startYear + x * 4);
               const [, name, party] = getPresident(curYear);
               return `${curYear}  ·  ${name} (${party})`;
@@ -158,4 +179,20 @@ function buildChart(historicalCycles, currentPct) {
     if (dsIdx !== lastHoveredDs) { lastHoveredDs = dsIdx; setHover(dsIdx); }
   });
   canvas.addEventListener('mouseleave', () => { lastHoveredDs = -1; setHover(-1); });
+
+  /* ── wire HTML legend toggles ── */
+  function bindLegendToggle(elId, dsIndex) {
+    if (dsIndex < 0) return;
+    const el = document.getElementById(elId);
+    if (!el) return;
+    el.addEventListener('click', () => {
+      const ds = chartInst.data.datasets[dsIndex];
+      ds.hidden = !ds.hidden;
+      el.classList.toggle('off', ds.hidden);
+      chartInst.update();
+    });
+  }
+  bindLegendToggle('legend-median', medianDsIndex);
+  const currentDsIndex = datasets.length - 1;       // current is always last
+  if (currentPct && currentPct.length) bindLegendToggle('legend-current', currentDsIndex);
 }

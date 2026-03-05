@@ -35,7 +35,10 @@ function startHoverLoop() {
     }
     if (dirty && chartInst) {
       chartInst.data.datasets.forEach((ds, i) => {
-        if (i < numHistorical) {
+        if (i === medianDsIndex) {
+          ds.borderColor = `rgba(255,255,255,${curAlpha[i]})`;
+          ds.borderWidth = curWidth[i];
+        } else if (i < numHistorical) {
           ds.borderColor = hexToRgba('#4fa3e0', curAlpha[i]);
           ds.borderWidth = curWidth[i];
         } else {

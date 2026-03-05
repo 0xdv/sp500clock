@@ -50,7 +50,15 @@ async function main() {
     setStatus(`Failed to load live data: ${e.message}`, true);
   }
 
-  buildChart(historicalCycles, currentPct);
+  let medianData = null;
+  try {
+    const mResp = await fetch('median_cycle.json');
+    medianData = await mResp.json();
+  } catch (e) {
+    console.warn('Could not load median_cycle.json', e);
+  }
+
+  buildChart(historicalCycles, currentPct, medianData);
 }
 
 main();

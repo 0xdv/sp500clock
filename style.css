@@ -51,10 +51,18 @@ canvas { display: block; width: 100% !important; }
   font-size: 12px;
   color: #8b949e;
 }
+.legend-item.toggleable {
+  cursor: pointer;
+  user-select: none;
+  transition: opacity 0.2s;
+}
+.legend-item.toggleable:hover { opacity: 0.8; }
+.legend-item.toggleable.off  { opacity: 0.35; text-decoration: line-through; }
 .legend-dot {
   width: 28px;
   height: 3px;
   border-radius: 2px;
 }
 .legend-dot.historical { background: #4fa3e0; opacity: 0.6; }
+.legend-dot.median     { background: #fff; opacity: 0.9; border-top: 2px dashed #fff; height: 0; }
 .legend-dot.current    { background: #FFD700; }
